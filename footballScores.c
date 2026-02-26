@@ -4,8 +4,6 @@
 int main(){
     //Variable Declaration
     int score = 0;
-    int pointWorth[] = {2, 3, 6, 7, 8}; //SFT, FG, TD, TD1, TD2
-    int pointCount[] = {0, 0, 0, 0, 0};
 
     //Main program loop
 	while(1){
@@ -20,31 +18,21 @@ int main(){
 
         printf("Possible combinations of scoring play if a team's score is %d\n", score);
         //Calculate possible point combinations
-        //Check for only one type of score the whole game
-        if (score % pointWorth[0] == 0){ //ALL SFTs
-            pointCount[0] = score / 2;
-            printf("%d TD+2pt, %d TD+FG, %d TD, %d 3pt FG, %d Safety\n", pointCount[4], pointCount[3], pointCount[2], pointCount[1], pointCount[0]);
-            pointCount[0] = 0;
-        }
-        if (score % pointWorth[1] == 0){ //ALL FGs
-            pointCount[1] = score / 3;
-            printf("%d TD+2pt, %d TD+FG, %d TD, %d 3pt FG, %d Safety\n", pointCount[4], pointCount[3], pointCount[2], pointCount[1], pointCount[0]);  
-            pointCount[1] = 0;
-        }
-        if (score % pointWorth[2] == 0){ //ALL TDs
-            pointCount[2] = score / 6;
-            printf("%d TD+2pt, %d TD+FG, %d TD, %d 3pt FG, %d Safety\n", pointCount[4], pointCount[3], pointCount[2], pointCount[1], pointCount[0]);
-            pointCount[2] = 0;
-        }
-        if (score % pointWorth[3] == 0){ //ALL TD1s
-            pointCount[3] = score / 7;
-            printf("%d TD+2pt, %d TD+FG, %d TD, %d 3pt FG, %d Safety\n", pointCount[4], pointCount[3], pointCount[2], pointCount[1], pointCount[0]);
-            pointCount[3] = 0;
-        }
-        if (score % pointWorth[4] == 0){ //ALL TD2s
-            pointCount[4] = score / 8;
-            printf("%d TD+2pt, %d TD+FG, %d TD, %d 3pt FG, %d Safety\n", pointCount[4], pointCount[3], pointCount[2], pointCount[1], pointCount[0]);
-            pointCount[4] = 0;
+        for (int TD2 = 0; TD2 <= score/8; TD2++){
+            int temp1 = score - 8*TD2;
+            for (int TD1 = 0; TD1 <= score/7; TD1++){
+                int temp2 = temp1 - 7*TD1;
+                for (int TD = 0; TD <= score/6; TD++){
+                    int temp3 = temp2 - 6*TD;
+                    for (int FG = 0; FG <= score/3; FG++){
+                        int temp4 = temp3 - 3*FG;
+                        if (temp4 % 2 == 0){
+                            int SFT = temp4 / 2;
+                            printf("%d TD + 2pt, %d TD + FG, %d TD, %d 3pt FG, %d Safety\n", TD2, TD1, TD, FG, SFT);
+                        }
+                    }
+                }
+            }
         }
 	}
     return 0;
