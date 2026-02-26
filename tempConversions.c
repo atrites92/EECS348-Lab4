@@ -9,13 +9,13 @@ int main(){
     //Get user input
     printf("Enter temperature: ");
     scanf("%d", user_temperature);
-    printf("\nTemperature types: ");
+    printf("\nTemperature scale of input: ");
     printf("\nFahrnheit (1)");
     printf("\nCelsius (2)");
     printf("\nKelvin (3)");
-    printf("\nEnter type (1, 2, 3): ");
+    printf("\nEnter scale (1, 2, 3): ");
     scanf("%d", user_type);
-    printf("\nEner type to conver to (1, 2, 3): ");
+    printf("\nEner scale to convert to (1, 2, 3): ");
     scanf("%d", user_conversion);
 
   return 0;
