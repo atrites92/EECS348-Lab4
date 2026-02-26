@@ -20,11 +20,11 @@ int main(){
         //Calculate possible point combinations
         for (int TD2 = 0; TD2 <= score/8; TD2++){
             int temp1 = score - 8*TD2;
-            for (int TD1 = 0; TD1 <= score/7; TD1++){
+            for (int TD1 = 0; TD1 <= temp1/7; TD1++){
                 int temp2 = temp1 - 7*TD1;
-                for (int TD = 0; TD <= score/6; TD++){
+                for (int TD = 0; TD <= temp2/6; TD++){
                     int temp3 = temp2 - 6*TD;
-                    for (int FG = 0; FG <= score/3; FG++){
+                    for (int FG = 0; FG <= temp3/3; FG++){
                         int temp4 = temp3 - 3*FG;
                         if (temp4 % 2 == 0){
                             int SFT = temp4 / 2;
