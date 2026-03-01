@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/aarontrites/GitHub/EECS348-Lab4/tempConversions'
+relocations:     []
+...
