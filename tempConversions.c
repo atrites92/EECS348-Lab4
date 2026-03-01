@@ -7,8 +7,8 @@ category function that relays information about how to prepare
 for the weather when going outside at the given temperature. */
 
 //Global constants
-const float absFahrenheit = -459.67;
-const float absCelsius = -273.15;
+const float absFahrenheit = -459.67f;
+const float absCelsius = -273.15f;
 const int absKelvin = 0;
 
 /* HELPER FUNCTIONS */
@@ -24,31 +24,31 @@ float fahrenheit_to_celsius(float fahrenheit){
 }
 //Converts C to K
 float celsius_to_kelvin(float celsius){
-  return celsius+273.15;
+  return (celsius + 273.15f);
 }
 //Converts K to C
 float kelvin_to_celsius(float kelvin){
-  return kelvin-273.15;
+  return (kelvin - 273.15f);
 }
 
 //Temperature Cateorgies
 void categorize_temperature(float celsius){
-  printf(">>>Weather Category:\n");
+  printf("\nWeather Category:");
   if (celsius < 0){
-    printf(">>Freezing:\n");
-    printf(">Advisory: Wear full winter gear, avoid activity\n\n");
+    printf("Freezing\n");
+    printf("Advisory: Wear full winter gear, avoid activity\n\n");
   } else if (celsius <= 10){
-    printf(">>Cold:\n");
-    printf(">Advisory: Wear warm jacket, bring gloves\n\n");
+    printf("Cold\n");
+    printf("Advisory: Wear warm jacket, bring gloves\n\n");
   } else if (celsius <= 25){
-    printf(">>Comfortable:\n");
-    printf(">Advisory: Bring lunch for the park, enjoy the day\n\n");
+    printf("Comfortable\n");
+    printf("Advisory: Bring lunch for the park, enjoy the day\n\n");
   } else if (celsius <= 35){
-    printf(">>Hot:\n");
-    printf(">Advisory: Drink lots of water, wear sunscreen\n\n");
+    printf("Hot\n");
+    printf("Advisory: Drink lots of water, wear sunscreen\n\n");
   } else {
-    printf(">>Extreme Heat:\n");
-    printf(">Advisory: Seek shaded areas, avoid activity\n\n");
+    printf("Extreme Heat\n");
+    printf("Advisory: Seek shaded areas, avoid activity\n\n");
   }
 }
 
@@ -74,8 +74,12 @@ int main(){
     int quit = 1;
 
     //Welcome message
+    printf("\n--------------------------------------------\n");
     printf("Welcome to my temperature conversion program\n");
-    printf("Note: Temperaute scale input is case-sensitive!\n");
+    printf("--------------------------------------------\n");
+    printf("This program converts temperature scales and displays ");
+    printf("advisories for outdoor ambient temperatures\n");
+    printf("Note: Temperaute scale input is case-sensitive!\n\n");
 
     //Main menu loop
      do {
@@ -91,7 +95,7 @@ int main(){
         printf("Temperature scales:\n");
         printf("Fahrenheit\n");
         printf("Celsius\n");
-        printf("Kelvin\n");
+        printf("Kelvin\n\n");
         printf("Enter input scale (F, C, or K): ");
         while (1){ 
           scanf(" %c", &user_type);
@@ -135,12 +139,12 @@ int main(){
         }
 
         //Get target scale
-        printf("Enter target scale (F, C, or K):");
+        printf("Enter target scale (F, C, or K): ");
         while(1){
           scanf(" %c", &user_conversion);
           //Defensive check: same scale error
           if (valid_scale(user_conversion) && user_type == user_conversion){
-            printf("Error: Can't convert to same scale.\n");
+            printf("Error: Can't convert to same scale. Please enter F, C, or K: ");
             continue;
           }
           //Defensive check: Valid input (F, C, or K)
@@ -180,10 +184,15 @@ int main(){
       }
 
       //Display conversion
+      //Kelvin input
       if (user_type == 'K'){
-        printf("Temperature conversion: %f%c is %f°%c\n", user_temperature, user_type, converted_temperature, user_conversion);
+        printf("Temperature conversion: %.2f%c is %.2f degrees %c\n", user_temperature, user_type, converted_temperature, user_conversion);
+      //Kelvin output
       } else if (user_conversion == 'K'){
-        printf("Temperature conversion: %f°%c is %f%c\n", user_temperature, user_type, converted_temperature, user_conversion);
+        printf("Temperature conversion: %.2f degrees %c is %.2f%c\n", user_temperature, user_type, converted_temperature, user_conversion);
+      //C or F input and output
+      } else {
+        printf("Temperature conversion: %.2f degrees %c is %.2f degrees %c\n", user_temperature, user_type, converted_temperature, user_conversion);
       }
 
       //Report category advisory
@@ -198,7 +207,10 @@ int main(){
       //Repeat the loop
       printf("Would you like to enter another temperature?\n");
       printf("Enter 0 to quit or 1 to continue: ");
-      scanf("%d", &quit);
+      while ((scanf("%d", &quit) != 1) || (quit != 0 && quit != 1)){
+        printf("Invalid input. Enter 0 or 1: ");
+        while(getchar() != '\n');
+      }
     } while (quit);
 
   return 0;
