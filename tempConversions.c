@@ -77,9 +77,9 @@ int main(){
     printf("\n--------------------------------------------\n");
     printf("Welcome to my temperature conversion program\n");
     printf("--------------------------------------------\n");
-    printf("This program converts temperature scales and displays ");
-    printf("advisories for outdoor ambient temperatures\n");
-    printf("Note: Temperature scale input is case-sensitive!\n\n");
+    printf("This program converts temperature scales and\n");
+    printf("displays advisories for outdoor temperatures\n");
+    printf("Note: Scale input is case-sensitive!\n\n");
 
     //Main menu loop
      do {
@@ -93,22 +93,22 @@ int main(){
        
         //Get scale of given input
         printf("Temperature scales:\n");
-        printf("Fahrenheit\n");
-        printf("Celsius\n");
-        printf("Kelvin\n\n");
+        printf(">Fahrenheit\n");
+        printf(">Celsius\n");
+        printf(">Kelvin\n\n");
         printf("Enter input scale (F, C, or K): ");
         while (1){ 
           scanf(" %c", &user_type);
+          //Clear input buffer
+          while(getchar() != '\n');
+
           //Defensive check: Valid input (F, C, or K)
           if (valid_scale(user_type)){
                 break;
               //Invalid char
               } else {
-                printf("Invalid input. Please enter F, C, or K : ");
+                printf("Invalid input. Please enter F, C, or K: ");
               }
-
-          //Clear input buffer
-          while(getchar() != '\n');
         }
 
        //Get temperature
@@ -120,6 +120,8 @@ int main(){
             //Clear input buffer
             while(getchar() != '\n');
           }
+          //Clear input buffer
+          while(getchar() != '\n');
   
           //Defensive check: Temperature below absolute zero
           //Kelvin
@@ -142,6 +144,9 @@ int main(){
         printf("Enter target scale (F, C, or K): ");
         while(1){
           scanf(" %c", &user_conversion);
+          //Clear input buffer
+          while(getchar() != '\n');
+
           //Defensive check: same scale error
           if (valid_scale(user_conversion) && user_type == user_conversion){
             printf("Error: Can't convert to same scale. Please enter F, C, or K: ");
@@ -149,14 +154,12 @@ int main(){
           }
           //Defensive check: Valid input (F, C, or K)
           if (!valid_scale(user_conversion)){
-            printf("Invalid input. Please enter F, C, or K:");
+            printf("Invalid input. Please enter F, C, or K: ");
             continue;
           } 
           if (valid_scale(user_conversion) && user_type != user_conversion){
             break;
           }
-          //Clear input buffer
-          while(getchar() != '\n');
         }
 
       //Conversion branches
