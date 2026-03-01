@@ -36,33 +36,30 @@ void categorize_temperature(float celsius){
   printf(">>>Weather Category:\n");
   if (celsius < 0){
     printf(">>Freezing:\n");
-    printf(">Advisory: Wear full winter gear, wear boots\n");
+    printf(">Advisory: Wear full winter gear, wear boots\n\n");
   } else if (celsius <= 10){
     printf(">>Cold:\n");
-    printf(">Advisory: Wear warm jacket, bring gloves\n");
+    printf(">Advisory: Wear warm jacket, bring gloves\n\n");
   } else if (celsius <= 25){
     printf(">>Comfortable:\n");
-    printf(">Advisory: Bring lunch for the park, enjoy the day\n");
+    printf(">Advisory: Bring lunch for the park, enjoy the day\n\n");
   } else if (celsius <= 35){
     printf(">>Hot:\n");
-    printf(">Advisory: Drink lots of water, wear sunscreen\n");
+    printf(">Advisory: Drink lots of water, wear sunscreen\n\n");
   } else {
     printf(">>Extreme Heat:\n");
-    printf(">Advisory: Seek shaded areas, avoid activity\n");
+    printf(">Advisory: Seek shaded areas, avoid activity\n\n");
   }
 }
 
 //Check for valid scale input
-//Defenseive check: Valid input (F, f, C, c, K or k)
-int valid_scale(char temp){
-          if (user_type == 'F' || 
-              user_type == 'f' || 
-              user_type == 'C' || 
-              user_type == 'c' ||
-              user_type == 'K' ||
-              user_type == 'k' ){
+//Defenseive check: Valid input (F, C, or K)
+int valid_scale(char scale){
+          if (scale == 'F' ||
+              scale == 'C' || 
+              scale == 'K' ){
               return 1;
-          else return 0;
+          } else return 0;
 }
 
 /* END HELPER FUNCTIONS */
@@ -77,6 +74,7 @@ int main(){
 
     //Welcome message
     printf("Welcome to my temperature conversion program\n");
+    printf("Note: Temperaute scale input is case-sensitive!\n");
 
     //Main menu loop
      do {
@@ -96,12 +94,12 @@ int main(){
         printf("Enter input scale (F, C, or K): ");
         while (1){ 
           scanf("%c", &user_type);
-          //Defenseive check: Valid input (F, f, C, c, K or k)
+          //Defenseive check: Valid input (F, C, or K)
           if (valid_scale(user_type)){
                 break;
               //Invalid char
               } else {
-                printf("Invalid input. Please enter F, C, or K: ");
+                printf("Invalid input. Please enter F, C, or K : ");
               }
 
           //Clear input buffer
@@ -147,7 +145,7 @@ int main(){
           if (valid_scale(user_conversion) && user_type == user_conversion){
             printf("Error: Can't convert to same scale.\n");
           }
-          //Defenseive check: Valid input (F, f, C, c, K or k)
+          //Defenseive check: Valid input (F, C, or K)
           if (!valid_scale(user_conversion)){
             printf("Invalid input. Please enter F, C, or K:");
           }
@@ -156,10 +154,16 @@ int main(){
         }
 
       //TODO: Make conversion
-
+      if (user_type == 'F')
        
-      //TODO: Report category
-
+      //Report category advisory
+      if (user_type == 'C'){
+        categorize_temperature(user_temperature);
+      } else if (user_type == 'F'){
+        categorize_temperature(fahrenheit_to_celsius(user_temperature));
+      } else {
+        categorize_temperature(kelvin_to_celsius(user_temperature));
+      }
       
       //Repeat the loop
       printf("Would you like to enter another temperature?\n");
