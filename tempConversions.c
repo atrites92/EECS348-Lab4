@@ -135,10 +135,6 @@ int main(){
         }
 
         //Get target scale
-        printf("Temperature scales:\n");
-        printf("Fahrnheit\n");
-        printf("Celsius\n");
-        printf("Kelvin\n");
         printf("Enter target scale (F, C, or K):");
         while(1){
           scanf("%c", &user_conversion);
@@ -181,7 +177,7 @@ int main(){
       }
 
       //Display conversion
-      printf("Temperature conversion: %f°%c is %f°%c\n", user_temperature, user_type, user_conversion, converted_temperature);
+      printf("Temperature conversion: %f°%c is %f°%c\n", user_temperature, user_type, converted_temperature, user_conversion);
 
       //Report category advisory
       if (user_type == 'C'){
