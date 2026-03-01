@@ -216,6 +216,9 @@ int main(){
         printf("Invalid input. Enter 0 or 1: ");
         while(getchar() != '\n');
       }
+
+      //Buffer clear
+      while(getchar() != '\n');
     } while (quit);
 
   return 0;
