@@ -36,7 +36,7 @@ void categorize_temperature(float celsius){
   printf(">>>Weather Category:\n");
   if (celsius < 0){
     printf(">>Freezing:\n");
-    printf(">Advisory: Wear full winter gear, wear boots\n\n");
+    printf(">Advisory: Wear full winter gear, avoid activity\n\n");
   } else if (celsius <= 10){
     printf(">>Cold:\n");
     printf(">Advisory: Wear warm jacket, bring gloves\n\n");
@@ -70,6 +70,7 @@ int main(){
     float user_temperature;
     char user_type;
     char user_conversion;
+    float converted_temperature;
     int quit = 1;
 
     //Welcome message
@@ -153,9 +154,35 @@ int main(){
           while(getchar() != '\n');
         }
 
-      //TODO: Make conversion
-      if (user_type == 'F')
-       
+      //Conversion branches
+      //User entered Fahrenheit
+      if (user_type == 'F'){
+        if (user_conversion == 'K'){
+          converted_temperature = fahrenheit_to_celsius(celsius_to_kelvin(user_temperature));
+        } else {
+          converted_temperature = fahrenheit_to_celsius(user_temperature);
+        }
+      }
+      //User entered Celsius
+      if (user_type == 'C'){
+        if (user_conversion == 'K'){
+          converted_temperature = celsius_to_kelvin(user_temperature);
+        } else {
+          converted_temperature = celsius_to_fahrenheit(user_temperature);
+        }
+      }
+      //User entered Kelvin
+      if (user_type == 'K'){
+        if (user_conversion == 'F'){
+          converted_temperature = kelvin_to_celsius(celsius_to_fahrenheit(user_temperature));
+        } else {
+          converted_temperature = kelvin_to_celsius(user_temperature);
+        }
+      }
+
+      //Display conversion
+      printf("Temperature conversion: %f°%c is %f°%c\n", user_temperature, user_type, user_conversion, converted_temperature);
+
       //Report category advisory
       if (user_type == 'C'){
         categorize_temperature(user_temperature);
