@@ -33,7 +33,7 @@ float kelvin_to_celsius(float kelvin){
 
 //Temperature Cateorgies
 void categorize_temperature(float celsius){
-  printf("\nWeather Category:");
+  printf("\nWeather Category: ");
   if (celsius < 0){
     printf("Freezing\n");
     printf("Advisory: Wear full winter gear, avoid activity\n\n");
@@ -79,7 +79,7 @@ int main(){
     printf("--------------------------------------------\n");
     printf("This program converts temperature scales and displays ");
     printf("advisories for outdoor ambient temperatures\n");
-    printf("Note: Temperaute scale input is case-sensitive!\n\n");
+    printf("Note: Temperature scale input is case-sensitive!\n\n");
 
     //Main menu loop
      do {
@@ -152,7 +152,9 @@ int main(){
             printf("Invalid input. Please enter F, C, or K:");
             continue;
           } 
-          else break;
+          if (valid_scale(user_conversion) && user_type != user_conversion){
+            break;
+          }
           //Clear input buffer
           while(getchar() != '\n');
         }
@@ -162,7 +164,7 @@ int main(){
       if (user_type == 'F'){
         if (user_conversion == 'K'){
           converted_temperature = celsius_to_kelvin(fahrenheit_to_celsius(user_temperature));
-        } else {
+        } else if (user_conversion == 'C'){
           converted_temperature = fahrenheit_to_celsius(user_temperature);
         }
       }
@@ -170,7 +172,7 @@ int main(){
       if (user_type == 'C'){
         if (user_conversion == 'K'){
           converted_temperature = celsius_to_kelvin(user_temperature);
-        } else {
+        } else if (user_conversion == 'F'){
           converted_temperature = celsius_to_fahrenheit(user_temperature);
         }
       }
@@ -178,7 +180,7 @@ int main(){
       if (user_type == 'K'){
         if (user_conversion == 'F'){
           converted_temperature = celsius_to_fahrenheit(kelvin_to_celsius(user_temperature));
-        } else {
+        } else if (user_conversion == 'C'){
           converted_temperature = kelvin_to_celsius(user_temperature);
         }
       }
