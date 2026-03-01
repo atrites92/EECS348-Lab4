@@ -87,8 +87,8 @@ int main(){
       the scale of choice first. -- Why?
       If temperature is given first and the value is less than the absolute 
       temperature for Fahrenheit (the lowest numeric value of the three) and 
-      then asks for scale, the program will end in an infinite loop since we 
-      can backstep. By receiving the input scale first, we can properly check
+      then asks for scale, the program will enter an infinite loop since we 
+      can't backstep. By receiving the input scale first, we can properly check
       for valid inputs above absolute zero.*/
        
         //Get scale of given input
