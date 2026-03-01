@@ -11,6 +11,8 @@ const float absFarhenheit = -459.67;
 const float absCelsius = -273.15;
 const int absKelvin = 0;
 
+/* HELPER FUNCTIONS */
+
 //Conversion helper functions
 //Converts C to F
 float celsius_to_fahrenheit(float celsius){
@@ -50,6 +52,21 @@ void categorize_temperature(float celsius){
   }
 }
 
+//Check for valid scale input
+//Defenseive check: Valid input (F, f, C, c, K or k)
+int valid_scale(char temp){
+          if (user_type == 'F' || 
+              user_type == 'f' || 
+              user_type == 'C' || 
+              user_type == 'c' ||
+              user_type == 'K' ||
+              user_type == 'k' ){
+              return 1;
+          else return 0;
+}
+
+/* END HELPER FUNCTIONS */
+
 //Main Program Function
 int main(){
     //Variable declaration
@@ -63,16 +80,14 @@ int main(){
 
     //Main menu loop
      do {
-      //Get user input
-        //Get temperature
-        printf("Enter temperature: ");
-        //Defensive check: invalid input error
-        while (scanf("%f", &user_temperature) != 1){
-          printf("Invalid input. Please enter a numeric temperature: ");
-          //Clear input buffer
-          while(getchar() != '\n');
-        }
-        
+      /*Getting user input: As a design choice, have the user enter
+      the scale of choice first. -- Why?
+      If temperature is given first and the value is less than the absolute 
+      temperature for Fahrenheit (the lowest numeric value of the three) and 
+      then asks for scale, the program will end in an infinite loop since we 
+      can backstep. By receiving the input scale first, we can properly check
+      for valid inputs above absolute zero.*/
+       
         //Get scale of given input
         printf("Temperature scales:\n");
         printf("Fahrnheit\n");
@@ -81,30 +96,9 @@ int main(){
         printf("Enter input scale (F, C, or K): ");
         while (1){ 
           scanf("%c", &user_type);
-          //Defenseive check: Input not F, f, C, c, K or k
-          if (user_type == 'F' || 
-              user_type == 'f' || 
-              user_type == 'C' || 
-              user_type == 'c' ||
-              user_type == 'K' ||
-              user_type == 'k' )
-              {
-                //Defensive check: below absolute zero error
-                //Kelvin
-                if ((user_type == 'K' || user_type == 'k') && user_temperature < absKelvin){
-                  printf("Error: Input below absolute zero.\n");
-                }
-                //Celsius
-                else if ((user_type == 'C' || user_type == 'c') && user_temperature < absCelsius){
-                  printf("Error: Input below absolute zero.\n");
-                }
-                //Fahrenheit
-                else if ((user_type == 'F' || user_type == 'f') && user_temperature < absFarhenheit){
-                  printf("Error: Input below absolute zero.\n");
-
-                //If input is valid, break loop
-                } else break;
-              
+          //Defenseive check: Valid input (F, f, C, c, K or k)
+          if (valid_scale(user_type)){
+                break;
               //Invalid char
               } else {
                 printf("Invalid input. Please enter F, C, or K: ");
@@ -114,14 +108,59 @@ int main(){
           while(getchar() != '\n');
         }
 
-        //Get target scale
-        printf("Enter target scale (F, C, or K):");
-        //Defensive check: same scale error
-        scanf("%c", &user_conversion);
-        if (user_type == user_conversion){
-          printf("Error: Can't convert to same scale.\n");
+       //Get temperature
+       while (1){
+          printf("Enter temperature: ");
+          //Defensive check: Invalid input
+          while (scanf("%f", &user_temperature) != 1){
+            printf("Invalid input. Please enter a numeric temperature: ");
+            //Clear input buffer
+            while(getchar() != '\n');
+          }
+  
+          //Defensive check: Temperature below absolute zero
+          //Kelvin
+          if ((user_type == 'K' || user_type == 'k') && user_temperature < absKelvin){
+            printf("Error: Input is below absolute zero.\n");
+          }
+          //Celsius
+          else if ((user_type == 'C' || user_type == 'c') && user_temperature < absCelsius){
+            printf("Error: Input is below absolute zero.\n");
+          }
+          //Fahrenheit
+          else if ((user_type == 'F' || user_type == 'f') && user_temperature < absFarhenheit){
+            printf("Error: Input is below absolute zero.\n");
+
+          //Input given correctly, break loop
+          } else break;
         }
 
+        //Get target scale
+        printf("Temperature scales:\n");
+        printf("Fahrnheit\n");
+        printf("Celsius\n");
+        printf("Kelvin\n");
+        printf("Enter target scale (F, C, or K):");
+        while(1){
+          scanf("%c", &user_conversion);
+          //Defensive check: same scale error
+          if (valid_scale(user_conversion) && user_type == user_conversion){
+            printf("Error: Can't convert to same scale.\n");
+          }
+          //Defenseive check: Valid input (F, f, C, c, K or k)
+          if (!valid_scale(user_conversion)){
+            printf("Invalid input. Please enter F, C, or K:");
+          }
+          //Clear input buffer
+          while(getchar() != '\n');
+        }
+
+      //TODO: Make conversion
+
+       
+      //TODO: Report category
+
+      
       //Repeat the loop
       printf("Would you like to enter another temperature?\n");
       scanf("Enter 0 to quit or 1 to continue: %d", &quit);
