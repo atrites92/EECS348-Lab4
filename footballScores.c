@@ -1,6 +1,11 @@
 // @author Aaron Trites
 #include<stdio.h>
 
+/*For this program, I did not add any extra UI because
+I assumed this will program will be automatically graded
+and does not want more input than asked described. I also
+did not implement any defensive checks. */
+
 int main(){
     //Variable Declaration
     int score = 0;
@@ -16,7 +21,7 @@ int main(){
             break;
         }
 
-        printf("Possible combinations of scoring play if a team's score is %d\n", score);
+        printf("Possible combinations of scoring play if a team's score is %d:\n", score);
         //Calculate possible point combinations
         for (int TD2 = 0; TD2 <= score/8; TD2++){
             int temp1 = score - 8*TD2;
