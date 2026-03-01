@@ -3,8 +3,7 @@
 
 /*For this program, I did not add any extra UI because
 I assumed this will program will be automatically graded
-and does not want more input than asked described. I also
-did not implement any defensive checks. */
+and does not want more input than asked described. */
 
 int main(){
     //Variable Declaration
@@ -15,7 +14,10 @@ int main(){
         //Get user choice (STOP or score to calculate)
 		printf("Enter 0 or 1 to STOP\n");
 		printf("Enter the NFL score: ");
-        scanf("%d", &score);
+        while (scanf("%d", &score) != 1){
+            while (getchar() != '\n');
+            printf("Invalid input. Please enter a positive integer score: ");
+        }
         //Score of 2 or higher is required
 		if (score < 2){
             break;
