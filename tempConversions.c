@@ -7,7 +7,7 @@ category function that relays information about how to prepare
 for the weather when going outside at the given temperature. */
 
 //Global constants
-const float absFarhenheit = -459.67;
+const float absFahrenheit = -459.67;
 const float absCelsius = -273.15;
 const int absKelvin = 0;
 
@@ -16,11 +16,11 @@ const int absKelvin = 0;
 //Conversion helper functions
 //Converts C to F
 float celsius_to_fahrenheit(float celsius){
-  return (((9/5)*celsius)+32);
+  return (((9.0f/5.0f)*celsius)+32.0f);
 }
 //Converts F to C
 float fahrenheit_to_celsius(float fahrenheit){
-  return ((5/9)*(fahrenheit-32));
+  return ((5.0f/9.0f)*(fahrenheit-32.0f));
 }
 //Converts C to K
 float celsius_to_kelvin(float celsius){
@@ -89,13 +89,13 @@ int main(){
        
         //Get scale of given input
         printf("Temperature scales:\n");
-        printf("Fahrnheit\n");
+        printf("Fahrenheit\n");
         printf("Celsius\n");
         printf("Kelvin\n");
         printf("Enter input scale (F, C, or K): ");
         while (1){ 
-          scanf("%c", &user_type);
-          //Defenseive check: Valid input (F, C, or K)
+          scanf(" %c", &user_type);
+          //Defensive check: Valid input (F, C, or K)
           if (valid_scale(user_type)){
                 break;
               //Invalid char
@@ -119,15 +119,15 @@ int main(){
   
           //Defensive check: Temperature below absolute zero
           //Kelvin
-          if ((user_type == 'K' || user_type == 'k') && user_temperature < absKelvin){
+          if ((user_type == 'K') && user_temperature < absKelvin){
             printf("Error: Input is below absolute zero.\n");
           }
           //Celsius
-          else if ((user_type == 'C' || user_type == 'c') && user_temperature < absCelsius){
+          else if ((user_type == 'C') && user_temperature < absCelsius){
             printf("Error: Input is below absolute zero.\n");
           }
           //Fahrenheit
-          else if ((user_type == 'F' || user_type == 'f') && user_temperature < absFarhenheit){
+          else if ((user_type == 'F') && user_temperature < absFahrenheit){
             printf("Error: Input is below absolute zero.\n");
 
           //Input given correctly, break loop
@@ -137,15 +137,18 @@ int main(){
         //Get target scale
         printf("Enter target scale (F, C, or K):");
         while(1){
-          scanf("%c", &user_conversion);
+          scanf(" %c", &user_conversion);
           //Defensive check: same scale error
           if (valid_scale(user_conversion) && user_type == user_conversion){
             printf("Error: Can't convert to same scale.\n");
+            continue;
           }
-          //Defenseive check: Valid input (F, C, or K)
+          //Defensive check: Valid input (F, C, or K)
           if (!valid_scale(user_conversion)){
             printf("Invalid input. Please enter F, C, or K:");
-          }
+            continue;
+          } 
+          else break;
           //Clear input buffer
           while(getchar() != '\n');
         }
@@ -154,7 +157,7 @@ int main(){
       //User entered Fahrenheit
       if (user_type == 'F'){
         if (user_conversion == 'K'){
-          converted_temperature = fahrenheit_to_celsius(celsius_to_kelvin(user_temperature));
+          converted_temperature = celsius_to_kelvin(fahrenheit_to_celsius(user_temperature));
         } else {
           converted_temperature = fahrenheit_to_celsius(user_temperature);
         }
@@ -170,14 +173,18 @@ int main(){
       //User entered Kelvin
       if (user_type == 'K'){
         if (user_conversion == 'F'){
-          converted_temperature = kelvin_to_celsius(celsius_to_fahrenheit(user_temperature));
+          converted_temperature = celsius_to_fahrenheit(kelvin_to_celsius(user_temperature));
         } else {
           converted_temperature = kelvin_to_celsius(user_temperature);
         }
       }
 
       //Display conversion
-      printf("Temperature conversion: %f°%c is %f°%c\n", user_temperature, user_type, converted_temperature, user_conversion);
+      if (user_type == 'K'){
+        printf("Temperature conversion: %f%c is %f°%c\n", user_temperature, user_type, converted_temperature, user_conversion);
+      } else if (user_conversion == 'K'){
+        printf("Temperature conversion: %f°%c is %f%c\n", user_temperature, user_type, converted_temperature, user_conversion);
+      }
 
       //Report category advisory
       if (user_type == 'C'){
@@ -190,7 +197,8 @@ int main(){
       
       //Repeat the loop
       printf("Would you like to enter another temperature?\n");
-      scanf("Enter 0 to quit or 1 to continue: %d", &quit);
+      printf("Enter 0 to quit or 1 to continue: ");
+      scanf("%d", &quit);
     } while (quit);
 
   return 0;
